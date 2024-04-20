@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Hall</title>
+</head>
+
+<body>
+    <form action="/add-hall/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="name">
+                name
+            </label>
+            <input type="text" name="name" id="name">
+        </div>
+        <div>
+            <label for="description">
+                description
+            </label>
+            <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        </div>
+        <div>
+            <label for="location">
+                location
+            </label>
+            <input type="text" name="location" id="location">
+        </div>
+        <div>
+            <label for="capacity">
+                capacity
+            </label>
+            <input type="number" name="capacity" id="capacity">
+        </div>
+        <div>
+            <label for="images">
+                images
+            </label>
+            <input type="file" name="images" id="images">
+        </div>
+        <div><button type="submit">Submit</button></div>
+    </form>
+</body>
+
+</html>
