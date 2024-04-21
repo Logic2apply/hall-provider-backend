@@ -120,3 +120,26 @@ def addBooking(request):
         requestors = User.objects.filter(is_staff = True).all()
         return render(request, 'home/addBooking.html', {'hallsAvaliable':hallsAvaliable, "requestors":requestors})
 
+@login_required(redirect_field_name="signin")
+def viewBookings(request):
+    if request.user.is_staff or request.user.is_superuser:
+        bookings = Booking.objects.filter(dateOfEvent__gte = datetime.now).all()
+        return render(request, 'home/viewBookings.html', {'bookings':bookings})
+    else:
+        bookings = Booking.objects.filter(dateOfEvent__gte=datetime.now, requestor=request.user).all()
+        return render(request, "home/viewBookings.html", {"bookings": bookings})
+
+@login_required(redirect_field_name="signin")
+def toggleBookingAcceptance(request, bookingid):
+    if request.user.is_staff or request.user.is_superuser:
+        booking = Booking.objects.get(id = bookingid)
+        if booking.approvedStatus:
+            booking.approvedStatus = False
+        else:
+            booking.approvedStatus = True
+        booking.save()
+        messages.success(request, f"Approved Status changed to {booking.approvedStatus}")
+        return redirect("viewBookings")
+    else:
+        messages.error(request, "Must be staff or superuser")
+        return redirect("signin")
