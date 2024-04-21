@@ -36,7 +36,7 @@ def register(request):
         return render(request, 'authentication/register.html')
     return redirect("index")
 
-@login_required(redirect_field_name="login")
+@login_required(redirect_field_name="signin")
 def addStaff(request):
     if request.user.is_authenticated and request.user.is_superuser:
         if request.method == "POST":
@@ -52,8 +52,8 @@ def addStaff(request):
         return render(request, 'authentication/addStaff.html')
 
 
-@login_required(redirect_field_name="login")
+@login_required(redirect_field_name="signin")
 def signout(request):
     logout(request)
     messages.success(request, 'You are now logged out!')
-    return redirect("login")
+    return redirect("signin")

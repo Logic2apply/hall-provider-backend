@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Halls</title>
+</head>
+<body>
+    <form action="/view-halls/" method="post">
+        {% csrf_token %}
+        <label for="event_date">event date</label>
+        <input type="date" name="eventdate" id="eventdate">
+        <label for="startTime">startTime</label>
+        <input type="time" name="start_time" id="startTime">
+        <label for="endTime">endTime</label>
+        <input type="time" name="end_time" id="endTime">
+        <button type="submit">Submit</button>
+    </form>
+
+    <div>
+        {% for hall in hallsAvailable %}
+            <div>
+                <h1>{{ hall.name }}</h1>
+                <p>{{ hall.location }}</p>
+                <a href="/view-hall/{{ hall.id }}">View Hall {{ hall.id }}</a>
+                <a href="/remove-hall/{{ hall.id }}">remove Hall {{ hall.id }}</a>
+            </div>
+            
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class Hall(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(null=False, max_length=500, default="")
-    description = models.CharField(null=False, max_length=1500, default="")
+    description = models.TextField(null=False, max_length=1500, default="")
     location = models.TextField(null=False, max_length=500, default="")
     capacity = models.IntegerField(null=False, default=0)
     images = models.ImageField(upload_to="HallImages", default="HallImages/default.jpg")
@@ -40,11 +40,12 @@ class Booking(models.Model):
     club = models.TextField(null=False, default="")
     department = models.TextField(null=False, default="")
     eventName = models.TextField(null=False, default="")
-    eventDescription = models.CharField(null=False, max_length=1000, default="")
-    startTime = models.DateTimeField(null=False, default=datetime.now)
-    endTime = models.DateTimeField(null=False, default=datetime.now)
+    eventDescription = models.TextField(null=False, max_length=1000, default="")
+    dateOfEvent = models.DateField(null=False, default=datetime.now)
+    startTime = models.TimeField(null=False, auto_now_add=True)
+    endTime = models.TimeField(null=False, auto_now_add=True)
     approvedStatus = models.BooleanField(null=False, default=False)
-    remarks = models.CharField(default="", max_length=500)
+    remarks = models.TextField(default="", max_length=500)
     createdAt = models.DateTimeField(auto_now_add=True, null=False)
 
     def __str__(self) -> str:
@@ -62,6 +63,7 @@ class BookingAdmin(admin.ModelAdmin):
         "department",
         "eventName",
         "eventDescription",
+        "dateOfEvent",
         "startTime",
         "endTime",
         "approvedStatus",
